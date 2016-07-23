@@ -1,0 +1,26 @@
+{
+  "name": "simple-boilerplate",
+  "version": "1.0.0",
+  "description": "A simple project boilerplate using gulp and associated plug-ins",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/michaelkornblum/simple-boilerplate.git"
+  },
+  "keywords": [
+    "boilerplate",
+    "gulp"
+  ],
+  "author": "Michael Kornblum and Glenn Martin",
+  "license": "GPL-2.0",
+  "bugs": {
+    "url": "https://github.com/michaelkornblum/simple-boilerplate/issues"
+  },
+  "homepage": "https://github.com/michaelkornblum/simple-boilerplate#readme",
+  "devDependencies": {
+    "gulp": "^3.9.1"
+  }
+}
