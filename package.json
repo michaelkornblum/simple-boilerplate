@@ -21,9 +21,14 @@
   },
   "homepage": "https://github.com/michaelkornblum/simple-boilerplate#readme",
   "devDependencies": {
+    "browserify": "^13.1.0",
     "gulp": "^3.9.1",
     "gulp-file-include": "^0.13.7",
     "gulp-htmlmin": "^2.0.0",
-    "gulp-load-plugins": "^1.2.4"
+    "gulp-load-plugins": "^1.2.4",
+    "gulp-streamify": "^1.0.2",
+    "gulp-uglify": "^2.0.0",
+    "jquery": "^3.1.0",
+    "source": "0.0.3"
   }
 }
