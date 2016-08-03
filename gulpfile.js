@@ -48,19 +48,46 @@ gulp.task('html', function () {
 // concatenate and minify javascripts
 gulp.task('scripts', function () {
 
-  /* Scripts are concatenated (or bundled) using
-    common.js. See javascripts/app.js for
-    details. */
-  var bundleStream = browserify('./javascripts/app.js')
-    .bundle();
-  bundleStream
+    /* Scripts are concatenated (or bundled) using
+    common.js. We use app.js as an entry file.
+    See javascripts/app.js for details. */
+    var bundleStream = browserify('./javascripts/app.js').bundle();
+    bundleStream
 
     // Name the bundle index.js.
-    .pipe(source('index.js'))
+      .pipe(source('index.js'))
 
     // Transform bundle into gulp stream, and uglify output.
-    .pipe($g.streamify($g.uglify()))
+      .pipe($g.streamify($g.uglify()))
 
     // Save output to build/index.js
-    .pipe(gulp.dest('./build'));
-});
+      .pipe(gulp.dest('./build'));
+  });
+
+/* Task to concatenate, minify and preprocess sass to
+    CSS. We're using Sass here, because the syntax is indentical to
+    CSS, and the plugin does everything we need in one fell swoop. */
+gulp.task('scss', ['rename'], function () {
+
+    /* main.scss is the entry file */
+    return gulp.src('./stylesheets/scss/main.scss')
+
+      //Preprocess sass to css and minify results.
+      .pipe($g.sass({ outputStyle: 'compressed' })
+
+        // If there's an error display in console.
+        .on('error', $g.sass.logError))
+
+      // Send resuts to build directory
+      .pipe(gulp.dest('./build/'));
+  });
+
+  // Helper task to convert CSS to Sass files
+  gulp.task('rename', function() {
+    return gulp.src('./stylesheets/css/*.css')
+    .pipe($g.rename({
+      prefix: '_',
+      extname: '.scss',
+    }))
+    .pipe(gulp.dest('./stylesheets/scss/'));
+  });

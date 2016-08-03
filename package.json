@@ -26,6 +26,8 @@
     "gulp-file-include": "^0.13.7",
     "gulp-htmlmin": "^2.0.0",
     "gulp-load-plugins": "^1.2.4",
+    "gulp-rename": "^1.2.2",
+    "gulp-sass": "^2.3.2",
     "gulp-streamify": "^1.0.2",
     "gulp-uglify": "^2.0.0",
     "jquery": "^3.1.0",
