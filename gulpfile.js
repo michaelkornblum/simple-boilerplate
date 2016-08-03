@@ -17,6 +17,13 @@ var browserify = require('browserify');
   make the streams compatable. */
 var source = require('vinyl-source-stream');
 
+/* del is used to clean out the build directory
+  prior to server start up. Files are then rebuilt
+  by gulp, assuring that you only have the freshest
+  files in your build directory. */
+var del = require('del');
+
+
 // Task to oncatenate and minify HTML.
 gulp.task('html', function () {
 
@@ -84,10 +91,29 @@ gulp.task('scss', ['rename'], function () {
 
   // Helper task to convert CSS to Sass files
   gulp.task('rename', function() {
+
+    /* take everything in stylesheets/css directory
+      and rename it for sass consumption */
     return gulp.src('./stylesheets/css/*.css')
     .pipe($g.rename({
       prefix: '_',
       extname: '.scss',
     }))
+
+    /* Move results to stylesheets/scss directory for
+      compilation. */
     .pipe(gulp.dest('./stylesheets/scss/'));
+  });
+
+  /* Task to minify images. Not a part of the
+    default configuration, but nice to have. */
+  gulp.task('img', function() {
+    gulp.src('./images/*')
+      .pipe($g.imagemin())
+      .pipe(gulp.dest('./build/images'));
+  });
+
+  // Simple task to clean out build directory.
+  gulp.task('clean', function() {
+    return del(['./build']);
   });
