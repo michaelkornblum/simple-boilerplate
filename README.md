@@ -18,7 +18,7 @@ From the command-line enter:
 simple boilerplate is now ready to go.
 
 ## Working with HTML
-All HTML pages should be placed in the `pages` directory. Pages can be complete HTML documents, or can use file includes to reduce copy / paste errors. Details on how to use file includes can be found here: https://www.npmjs.com/package/gulp-file-include.
+All HTML pages should be placed in the `pages` directory. Pages can be complete HTML documents, or can use file includes to reduce copy / paste errors. Details on how to use file includes can be found [here](https://www.npmjs.com/package/gulp-file-include).
 
 Files that are saved in the `pages` directory are processed by gulp and output in `build/[filename].html`
 
