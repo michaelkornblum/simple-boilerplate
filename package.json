@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/michaelkornblum/simple-boilerplate#readme",
   "devDependencies": {
+    "browser-sync": "^2.14.0",
     "browserify": "^13.1.0",
     "del": "^2.2.1",
     "gulp": "^3.9.1",
@@ -33,6 +34,7 @@
     "gulp-streamify": "^1.0.2",
     "gulp-uglify": "^2.0.0",
     "jquery": "^3.1.0",
+    "run-sequence": "^1.2.2",
     "source": "0.0.3"
   }
 }

@@ -23,3 +23,7 @@ console.log(data.name,
   data.fryerSize,
   data.oilChanges
 );
+
+console.log('this is a test');
+
+alert('testing one two');

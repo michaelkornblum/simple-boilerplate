@@ -23,6 +23,15 @@ var source = require('vinyl-source-stream');
   files in your build directory. */
 var del = require('del');
 
+/* run-sequence runs all the gulp tasks below
+  in sequence. This prevents one task from
+  beginner before the other one has a chance
+  to complete. This is crucial when running
+  browser-sync. */
+var run = require('run-sequence');
+
+// do we need an intro for this one?
+var browserSync = require('browser-sync').create();
 
 // Task to oncatenate and minify HTML.
 gulp.task('html', function () {
@@ -31,17 +40,7 @@ gulp.task('html', function () {
   gulp.src('./*.html')
 
   // Concatenate HTML files.
-    .pipe($g.fileInclude({
-
-      /* Define character used to indicate
-       variable in HTML page. See index.html
-       for example. */
-      prefix: '@@',
-
-      /* Indicates relative directory location
-      for included files */
-      basepath: '@file',
-    }))
+    .pipe($g.fileInclude('@@'))
 
       //Minify HTML
     .pipe($g.htmlmin({
@@ -117,3 +116,26 @@ gulp.task('scss', ['rename'], function () {
   gulp.task('clean', function() {
     return del(['./build']);
   });
+
+  // Task to launch server
+  gulp.task('server', function() {
+  browserSync.init({
+    server: {
+      baseDir: './build'
+    }
+  });
+});
+
+// Watch for changes in folders and fire off
+// tasks in response.
+gulp.task('watch', function() {
+  gulp.watch('javascripts/**/*.js', ['scripts']);
+  gulp.watch('stylesheets/**/*', ['scss']);
+  gulp.watch('./*.html', ['html']);
+  gulp.watch('img/*', ['img']);
+  gulp.watch('build/**/*', browserSync.reload);
+});
+
+gulp.task('default', function() {
+  run('clean', 'scss', 'scripts', 'html', 'server', 'watch');
+});
