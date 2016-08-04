@@ -37,7 +37,7 @@ var browserSync = require('browser-sync').create();
 gulp.task('html', function () {
 
   // Effect all html files in root directory.
-  gulp.src('./*.html')
+  gulp.src('./pages/*.html')
 
   // Concatenate HTML files.
     .pipe($g.fileInclude('@@'))
@@ -131,7 +131,7 @@ gulp.task('scss', ['rename'], function () {
 gulp.task('watch', function() {
   gulp.watch('javascripts/**/*.js', ['scripts']);
   gulp.watch('stylesheets/**/*', ['scss']);
-  gulp.watch('./*.html', ['html']);
+  gulp.watch('./pages/*.html', ['html']);
   gulp.watch('img/*', ['img']);
   gulp.watch('build/**/*', browserSync.reload);
 });
