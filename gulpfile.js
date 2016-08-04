@@ -18,7 +18,7 @@ gulp.task('pages', function () {
 gulp.task('scripts', function () {
     var bundleStream = browserify('./scripts/app.js').bundle();
     return bundleStream
-      .pipe(source('index.js'))
+      .pipe(source('app.js'))
       .pipe($g.streamify($g.uglify()))
       .pipe(gulp.dest('./build'));
   });
