@@ -31,12 +31,12 @@ gulp.task('styles', ['rename'], function () {
   });
 
 gulp.task('rename', function () {
-    return gulp.src('./stylesheets/css/*.css')
+    return gulp.src('./styles/css/*.css')
     .pipe($g.rename({
       prefix: '_',
       extname: '.scss',
     }))
-    .pipe(gulp.dest('./stylesheets/scss/'));
+    .pipe(gulp.dest('./styles/scss/'));
 
   });
 
@@ -60,9 +60,9 @@ gulp.task('server', function () {
 });
 
 gulp.task('watch', function () {
-  gulp.watch('javascripts/**/*.js', ['scripts']);
+  gulp.watch('scripts/**/*.js', ['scripts']);
   gulp.watch('styles/**/*', ['styles']);
-  gulp.watch('./pages/*.html', ['pages']);
+  gulp.watch('./pages/**/*.html', ['pages']);
   gulp.watch('images/*', ['images']);
   gulp.watch('build/**/*', browserSync.reload);
 });
