@@ -3,7 +3,7 @@ var $g = require('gulp-load-plugins')();
 var browserify = require('browserify');
 var source = require('vinyl-source-stream');
 var del = require('del');
-var run = require('run-sequence');
+var run = require('run-sequence').use(gulp);
 var browserSync = require('browser-sync').create();
 
 gulp.task('pages', function () {
@@ -37,7 +37,6 @@ gulp.task('rename', function () {
       extname: '.scss',
     }))
     .pipe(gulp.dest('./styles/scss/'));
-
   });
 
 gulp.task('images', function () {
@@ -47,8 +46,7 @@ gulp.task('images', function () {
   });
 
 gulp.task('clean', function () {
-    return del(['./build']);
-
+    del('./build');
   });
 
 gulp.task('server', function () {
@@ -67,7 +65,7 @@ gulp.task('watch', function () {
   gulp.watch('build/**/*', browserSync.reload);
 });
 
-gulp.task('default', function () {
+gulp.task('default', function (callback) {
   run(
   'clean',
   'styles',
@@ -75,6 +73,7 @@ gulp.task('default', function () {
   'pages',
   'images',
   'server',
-  'watch'
+  'watch',
+  callback
   );
 });
