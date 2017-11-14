@@ -1,79 +1,67 @@
-var gulp = require('gulp');
-var $g = require('gulp-load-plugins')();
-var browserify = require('browserify');
-var source = require('vinyl-source-stream');
-var del = require('del');
-var run = require('run-sequence').use(gulp);
-var browserSync = require('browser-sync').create();
+const gulp = require('gulp');
+const $g = require('gulp-load-plugins')();
+const browserify = require('browserify');
+const source = require('vinyl-source-stream');
+const del = require('del');
+const run = require('run-sequence').use(gulp);
+const browserSync = require('browser-sync').create();
 
-gulp.task('pages', function () {
-  return gulp.src('./pages/*.html')
+gulp.task('pages', () => 
+  gulp.src('./pages/*.html')
     .pipe($g.fileInclude('@@'))
     .pipe($g.htmlmin({
       collapseWhitespace: true,
     }))
+    .pipe(gulp.dest('./build')));
+
+gulp.task('scripts', () => {
+  let bundleStream = browserify('./scripts/app.js').bundle();
+  return bundleStream
+    .pipe(source('app.js'))
+    .pipe($g.streamify($g.uglify()))
     .pipe(gulp.dest('./build'));
-});
-
-gulp.task('scripts', function () {
-    var bundleStream = browserify('./scripts/app.js').bundle();
-    return bundleStream
-      .pipe(source('app.js'))
-      .pipe($g.streamify($g.uglify()))
-      .pipe(gulp.dest('./build'));
   });
 
-gulp.task('styles', ['rename'], function () {
-    return gulp.src('./styles/scss/main.scss')
-      .pipe($g.sass({ outputStyle: 'compressed' })
-        .on('error', $g.sass.logError))
-      .pipe(gulp.dest('./build/'));
-  });
+gulp.task('styles', ['rename'], () => 
+  gulp.src('./styles/scss/main.scss')
+    .pipe($g.sass({ outputStyle: 'compressed' })
+      .on('error', $g.sass.logError))
+    .pipe(gulp.dest('./build/')));
 
-gulp.task('rename', function () {
-    return gulp.src('./styles/css/*.css')
+gulp.task('rename', () => 
+  gulp.src('./styles/css/*.css')
     .pipe($g.rename({
       prefix: '_',
       extname: '.scss',
     }))
-    .pipe(gulp.dest('./styles/scss/'));
-  });
+    .pipe(gulp.dest('./styles/scss/')));
 
-gulp.task('images', function () {
-    gulp.src('./images/*')
-      .pipe($g.imagemin())
-      .pipe(gulp.dest('./build/images'));
-  });
+gulp.task('images', () => 
+  gulp.src('./images/*')
+    .pipe($g.imagemin())
+    .pipe(gulp.dest('./build/images')));
 
-gulp.task('clean', function () {
-    del('./build');
-  });
+gulp.task('clean', () => del('./build'));
 
-gulp.task('server', function () {
-  browserSync.init({
-    server: {
-      baseDir: './build',
-    },
-  });
-});
+gulp.task('server', () => browserSync.init({ 
+  server: { baseDir: './build' }}));
 
-gulp.task('watch', function () {
+gulp.task('watch', () => {
   gulp.watch('scripts/**/*.js', ['scripts']);
   gulp.watch('styles/**/*', ['styles']);
-  gulp.watch('./pages/**/*.html', ['pages']);
+  gulp.watch('pages/**/*.html', ['pages']);
   gulp.watch('images/*', ['images']);
   gulp.watch('build/**/*', browserSync.reload);
 });
 
-gulp.task('default', function (callback) {
+gulp.task('default', (callback) => 
   run(
-  'clean',
-  'styles',
-  'scripts',
-  'pages',
-  'images',
-  'server',
-  'watch',
-  callback
-  );
-});
+    'clean',
+    'styles',
+    'scripts',
+    'pages',
+    'images',
+    'server',
+    'watch',
+    callback
+  ));
