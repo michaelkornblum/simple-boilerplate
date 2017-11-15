@@ -9,8 +9,10 @@ From the command-line enter:S
 
 ### 2. Install Node Modules
 From the command-line, change directories into the newly cloned repo and enter:
-`cd simple-boilerpate`
-`npm install`
+```
+cd simple-boilerpate
+npm install
+```
 
 ### 3. Start Server
 From the command-line enter:
