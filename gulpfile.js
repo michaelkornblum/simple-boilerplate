@@ -1,7 +1,9 @@
 const gulp = require('gulp');
 const $g = require('gulp-load-plugins')();
 const browserify = require('browserify');
+const babelify = require('babelify');
 const source = require('vinyl-source-stream');
+const buffer = require('vinyl-buffer');
 const del = require('del');
 const run = require('run-sequence').use(gulp);
 const browserSync = require('browser-sync').create();
@@ -14,13 +16,28 @@ gulp.task('pages', () =>
     }))
     .pipe(gulp.dest('./build')));
 
-gulp.task('scripts', () => {
-  let bundleStream = browserify('./scripts/app.js').bundle();
-  return bundleStream
-    .pipe(source('app.js'))
-    .pipe($g.streamify($g.uglify()))
-    .pipe(gulp.dest('./build'));
-  });
+// gulp.task('scripts', () => {
+//   let bundleStream = browserify('./scripts/app.js').bundle();
+//   return bundleStream
+//     .pipe(source('app.js'))
+//     .pipe($g.streamify($g.uglify()))
+//     .pipe(gulp.dest('./build'));
+//   });
+
+gulp.task('scripts', () => 
+    browserify({ 
+      entries: './scripts/app.js', 
+      debug: true })
+      .transform('babelify', {
+        presets: ['env']
+      })
+      .bundle()
+      .pipe(source('app.js'))
+      .pipe(buffer())
+      .pipe($g.sourcemaps.init())
+      .pipe($g.uglify())
+      .pipe($g.sourcemaps.write('./maps'))
+      .pipe(gulp.dest('./build')));
 
 gulp.task('styles', ['rename'], () => 
   gulp.src('./styles/scss/main.scss')

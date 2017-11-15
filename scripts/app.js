@@ -1,5 +1,6 @@
-var $ = require('jquery');
-var data = require('./dataset.js');
+const $ = require('jquery');
+//const data = require('./dataset.js');
+import data from './dataset';
 
 $(document).ready(function () {
   console.log(data.name,
