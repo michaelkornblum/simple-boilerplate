@@ -16,14 +16,6 @@ gulp.task('pages', () =>
     }))
     .pipe(gulp.dest('./build')));
 
-// gulp.task('scripts', () => {
-//   let bundleStream = browserify('./scripts/app.js').bundle();
-//   return bundleStream
-//     .pipe(source('app.js'))
-//     .pipe($g.streamify($g.uglify()))
-//     .pipe(gulp.dest('./build'));
-//   });
-
 gulp.task('scripts', () => 
     browserify({ 
       entries: './scripts/app.js', 
