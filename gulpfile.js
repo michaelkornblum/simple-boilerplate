@@ -31,19 +31,11 @@ gulp.task('scripts', () =>
       .pipe($g.sourcemaps.write('./maps'))
       .pipe(gulp.dest('./build')));
 
-gulp.task('styles', ['rename'], () => 
-  gulp.src('./styles/scss/main.scss')
+gulp.task('styles', () => 
+  gulp.src('./styles/main.scss')
     .pipe($g.sass({ outputStyle: 'compressed' })
       .on('error', $g.sass.logError))
     .pipe(gulp.dest('./build/')));
-
-gulp.task('rename', () => 
-  gulp.src('./styles/css/*.css')
-    .pipe($g.rename({
-      prefix: '_',
-      extname: '.scss',
-    }))
-    .pipe(gulp.dest('./styles/scss/')));
 
 gulp.task('images', () => 
   gulp.src('./images/*')
