@@ -39,9 +39,5 @@
     "run-sequence": "^2.2.0",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0"
-  },
-  "dependencies": {
-    "install": "^0.10.1",
-    "npm": "^5.5.1"
   }
 }
