@@ -7,9 +7,20 @@ const buffer = require('vinyl-buffer');
 const del = require('del');
 const run = require('run-sequence').use(gulp);
 const browserSync = require('browser-sync').create();
+const tasks = [
+  'clean',
+  'styles',
+  'scripts',
+  'vectors',
+  'pages',
+  'images',
+  'server',
+  'watch',
+];
 
 gulp.task('pages', () =>
   gulp.src('./pages/*.html')
+    .pipe($g.plumber())
     .pipe($g.fileInclude('@@'))
     .pipe($g.htmlmin({
       collapseWhitespace: true,
@@ -33,17 +44,20 @@ gulp.task('scripts', () =>
 
 gulp.task('styles', () =>
   gulp.src('./styles/main.scss')
+    .pipe($g.plumber())
     .pipe($g.sass({ outputStyle: 'compressed' })
       .on('error', $g.sass.logError))
     .pipe(gulp.dest('./build/')));
 
 gulp.task('images', () =>
   gulp.src('./images/*')
+    .pipe($g.plumber())
     .pipe($g.imagemin())
     .pipe(gulp.dest('./build/images')));
 
 gulp.task('vectors', () =>
   gulp.src('./vectors/*')
+    .pipe($g.plumber())
     .pipe($g.svgmin())
     .pipe(gulp.dest('./pages/partials')));
 
@@ -61,15 +75,4 @@ gulp.task('watch', () => {
   gulp.watch('build/**/*', browserSync.reload);
 });
 
-gulp.task('default', (callback) =>
-  run(
-    'clean',
-    'styles',
-    'scripts',
-    'vectors',
-    'pages',
-    'images',
-    'server',
-    'watch',
-    callback
-  ));
+gulp.task('default', callback => run(...tasks, callback));
