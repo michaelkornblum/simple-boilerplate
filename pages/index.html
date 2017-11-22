@@ -1,20 +1,13 @@
 <!doctype html>
   <html lang="en">
-    <head>
-      @@include('partials/head.html', {
-        "title" : "Simple Boilerplate",
-        "description" : "a simple boilerplate",
-        "author" : "Michael Scott Kornblum"
-      })
-    </head>
+    @@include('partials/head.html', {
+      "title" : "Simple Boilerplate",
+      "description" : "a simple boilerplate",
+      "author" : "Michael Scott Kornblum"
+    })
     <body>
+      @@include('partials/hot-air-balloon.svg')
       <h1>Hello World!</h1>
-      <p>
-        Hello Mentorship Mondays.
-      </p>
-      @@include('partials/footer.html', {
-        "author" : "Michael Scott Kornblum"
-      })
       <script src="app.js">
       </script>
     </body>

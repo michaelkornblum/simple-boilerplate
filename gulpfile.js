@@ -8,7 +8,7 @@ const del = require('del');
 const run = require('run-sequence').use(gulp);
 const browserSync = require('browser-sync').create();
 
-gulp.task('pages', () => 
+gulp.task('pages', () =>
   gulp.src('./pages/*.html')
     .pipe($g.fileInclude('@@'))
     .pipe($g.htmlmin({
@@ -16,12 +16,12 @@ gulp.task('pages', () =>
     }))
     .pipe(gulp.dest('./build')));
 
-gulp.task('scripts', () => 
-    browserify({ 
-      entries: './scripts/app.js', 
-      debug: true })
+gulp.task('scripts', () =>
+    browserify({
+      entries: './scripts/app.js',
+      debug: true, })
       .transform('babelify', {
-        presets: ['env']
+        presets: ['env'],
       })
       .bundle()
       .pipe(source('app.js'))
@@ -31,35 +31,42 @@ gulp.task('scripts', () =>
       .pipe($g.sourcemaps.write('./maps'))
       .pipe(gulp.dest('./build')));
 
-gulp.task('styles', () => 
+gulp.task('styles', () =>
   gulp.src('./styles/main.scss')
     .pipe($g.sass({ outputStyle: 'compressed' })
       .on('error', $g.sass.logError))
     .pipe(gulp.dest('./build/')));
 
-gulp.task('images', () => 
+gulp.task('images', () =>
   gulp.src('./images/*')
     .pipe($g.imagemin())
     .pipe(gulp.dest('./build/images')));
 
+gulp.task('vectors', () =>
+  gulp.src('./vectors/*')
+    .pipe($g.svgmin())
+    .pipe(gulp.dest('./pages/partials')));
+
 gulp.task('clean', () => del('./build'));
 
-gulp.task('server', () => browserSync.init({ 
-  server: { baseDir: './build' }}));
+gulp.task('server', () => browserSync.init({
+  server: { baseDir: './build' }, }));
 
 gulp.task('watch', () => {
   gulp.watch('scripts/**/*.js', ['scripts']);
   gulp.watch('styles/**/*', ['styles']);
   gulp.watch('pages/**/*.html', ['pages']);
   gulp.watch('images/*', ['images']);
+  gulp.watch('vectors/*', ['vectors']);
   gulp.watch('build/**/*', browserSync.reload);
 });
 
-gulp.task('default', (callback) => 
+gulp.task('default', (callback) =>
   run(
     'clean',
     'styles',
     'scripts',
+    'vectors',
     'pages',
     'images',
     'server',
