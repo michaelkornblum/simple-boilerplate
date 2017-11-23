@@ -22,10 +22,9 @@
   "homepage": "https://github.com/michaelkornblum/simple-boilerplate#readme",
   "devDependencies": {
     "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
     "babel-preset-env": "^1.6.1",
-    "babelify": "^8.0.0",
     "browser-sync": "^2.14.0",
-    "browserify": "^14.5.0",
     "del": "^3.0.0",
     "gulp": "^3.9.1",
     "gulp-file-include": "^1.2.0",
@@ -34,12 +33,9 @@
     "gulp-load-plugins": "^1.2.4",
     "gulp-plumber": "^1.1.0",
     "gulp-sass": "^3.1.0",
-    "gulp-sourcemaps": "^2.6.1",
-    "gulp-streamify": "^1.0.2",
     "gulp-svgmin": "^1.2.4",
-    "gulp-uglify": "^3.0.0",
     "run-sequence": "^2.2.0",
-    "vinyl-buffer": "^1.0.0",
-    "vinyl-source-stream": "^1.1.0"
+    "uglifyjs-webpack-plugin": "^1.1.0",
+    "webpack-stream": "^4.0.0"
   }
 }

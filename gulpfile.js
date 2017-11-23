@@ -1,9 +1,7 @@
 const gulp = require('gulp');
 const $g = require('gulp-load-plugins')();
-const browserify = require('browserify');
-const babelify = require('babelify');
-const source = require('vinyl-source-stream');
-const buffer = require('vinyl-buffer');
+const webpack = require('webpack-stream');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const del = require('del');
 const run = require('run-sequence').use(gulp);
 const browserSync = require('browser-sync').create();
@@ -28,19 +26,26 @@ gulp.task('pages', () =>
     .pipe(gulp.dest('./build')));
 
 gulp.task('scripts', () =>
-    browserify({
-      entries: './scripts/app.js',
-      debug: true, })
-      .transform('babelify', {
-        presets: ['env'],
-      })
-      .bundle()
-      .pipe(source('app.js'))
-      .pipe(buffer())
-      .pipe($g.sourcemaps.init())
-      .pipe($g.uglify())
-      .pipe($g.sourcemaps.write('./maps'))
-      .pipe(gulp.dest('./build')));
+  gulp.src('./scripts/app.js')
+    .pipe($g.plumber())
+    .pipe(webpack({
+      devtool: 'source-map',
+      plugins: [
+        new UglifyJsPlugin(),
+      ],
+      module: {
+        loaders: [
+          {
+            test: /\.js$/,
+            loader: 'babel-loader',
+          },
+        ],
+      },
+      output: {
+        filename: 'main.js',
+      },
+    }))
+    .pipe(gulp.dest('./build')));
 
 gulp.task('styles', () =>
   gulp.src('./styles/main.scss')
