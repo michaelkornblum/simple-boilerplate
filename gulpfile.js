@@ -16,7 +16,7 @@ const tasks = [
   'watch',
 ];
 
-const { src, dest, watch } = gulp;
+const { src, dest } = gulp;
 
 gulp.task('pages', () =>
   src('./pages/*.html')
@@ -74,12 +74,12 @@ gulp.task('server', () => browserSync.init({
   server: { baseDir: './build' }, }));
 
 gulp.task('watch', () => {
-  watch('scripts/**/*.js', ['scripts']);
-  watch('styles/**/*', ['styles']);
-  watch('pages/**/*.html', ['pages']);
-  watch('images/*', ['images']);
-  watch('vectors/*', ['vectors']);
-  watch('build/**/*', browserSync.reload);
+  gulp.watch('scripts/**/*.js', ['scripts']);
+  gulp.watch('styles/**/*', ['styles']);
+  gulp.watch('pages/**/*.html', ['pages']);
+  gulp.watch('images/*', ['images']);
+  gulp.watch('vectors/*', ['vectors']);
+  gulp.watch('build/**/*', browserSync.reload);
 });
 
 gulp.task('default', callback => run(...tasks, callback));
