@@ -20,6 +20,7 @@ const { src, dest } = gulp;
 
 gulp.task('pages', () =>
   src('./pages/*.html')
+    .pipe($g.cached('including'))
     .pipe($g.plumber())
     .pipe($g.fileInclude('@@'))
     .pipe($g.htmlmin({
@@ -58,12 +59,14 @@ gulp.task('styles', () =>
 
 gulp.task('images', () =>
   src('./images/*')
+    .pipe($g.cached('optimizing'))
     .pipe($g.plumber())
     .pipe($g.imagemin())
     .pipe(dest('./build/images')));
 
 gulp.task('vectors', () =>
   src('./vectors/*')
+    .pipe($g.cache('inlining'))
     .pipe($g.plumber())
     .pipe($g.svgmin())
     .pipe(dest('./pages/partials')));

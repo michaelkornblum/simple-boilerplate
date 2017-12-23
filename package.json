@@ -27,6 +27,7 @@
     "browser-sync": "^2.14.0",
     "del": "^3.0.0",
     "gulp": "^3.9.1",
+    "gulp-cached": "^1.1.1",
     "gulp-file-include": "^1.2.0",
     "gulp-htmlmin": "^3.0.0",
     "gulp-imagemin": "^3.0.2",
